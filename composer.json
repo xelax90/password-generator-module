@@ -1,0 +1,22 @@
+{
+    "name": "xelax90/password-generator-module",
+    "description": "ZF2 integration for hackzilla/password-generator",
+    "require": {
+        "hackzilla/password-generator": "*"
+    },
+    "license": "GPL-v2.0",
+    "authors": [
+        {
+            "name": "xelax90",
+            "email": "schurix@gmx.de",
+            "homepage": "https://github.com/xelax90",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "XelaxPasswordGeneratorModule": "src"
+        },
+        "classmap" : ["Module.php"]
+    }
+}
