@@ -22,14 +22,18 @@ namespace XelaxPasswordGeneratorModule\PluginManager;
 
 use Zend\ServiceManager\AbstractPluginManager;
 use Hackzilla\PasswordGenerator\Generator\PasswordGeneratorInterface;
-use Hackzilla\PasswordGenerator\Generator\AbstractPasswordGenerator;
+
+use Hackzilla\PasswordGenerator\Generator\HumanPasswordGenerator;
+use Hackzilla\PasswordGenerator\Generator\ComputerPasswordGenerator;
+use Hackzilla\PasswordGenerator\Generator\HybridPasswordGenerator;
+use XelaxPasswordGeneratorModule\Options\GeneratorOptions;
 /**
  * Plugin manager for different password generators
  */
 class PluginManager extends AbstractPluginManager{
-	const GENERATOR_HUMAN    = 'Hackzilla\PasswordGenerator\Generator\HumanPasswordGenerator';
-	const GENERATOR_COMPUTER = 'Hackzilla\PasswordGenerator\Generator\ComputerPasswordGenerator';
-	const GENERATOR_HYBRID   = 'Hackzilla\PasswordGenerator\Generator\HybridPasswordGenerator';
+	const GENERATOR_HUMAN    = HumanPasswordGenerator::class;
+	const GENERATOR_COMPUTER = ComputerPasswordGenerator::class;
+	const GENERATOR_HYBRID   = HybridPasswordGenerator::class;
 
 	public function __construct(\Zend\ServiceManager\ConfigInterface $configuration = null) {
 		parent::__construct($configuration);
@@ -39,8 +43,8 @@ class PluginManager extends AbstractPluginManager{
 		$this->setInvokableClass(self::GENERATOR_COMPUTER , self::GENERATOR_COMPUTER);
 		
 		$this->addInitializer(function(PasswordGeneratorInterface $instance, PluginManager $pm){
-			/* @var $options \XelaxPasswordGeneratorModule\Options\GeneratorOptions */
-			$generatorOptions = $pm->getServiceLocator()->get('XelaxPasswordGeneratorModule\Options\Generator');
+			/* @var $options GeneratorOptions */
+			$generatorOptions = $pm->getServiceLocator()->get(GeneratorOptions::class);
 
 			$options = array();
 			if(isset($generatorOptions->getGeneratorOptions()[get_class($instance)])) {
@@ -68,8 +72,9 @@ class PluginManager extends AbstractPluginManager{
 		}
 
 		throw new \InvalidArgumentException(sprintf(
-			'Plugin of type %s is invalid; must implement Hackzilla\PasswordGenerator\Generator\PasswordGeneratorInterface',
-			(is_object($plugin) ? get_class($plugin) : gettype($plugin))
+			'Plugin of type %s is invalid; must implement %s',
+			(is_object($plugin) ? get_class($plugin) : gettype($plugin)),
+			PasswordGeneratorInterface::class
 		));
 	}
 }

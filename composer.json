@@ -2,6 +2,7 @@
     "name": "xelax90/password-generator-module",
     "description": "ZF2 integration for hackzilla/password-generator",
     "require": {
+		"php" : ">=5.5",
         "hackzilla/password-generator": "*"
     },
     "license": "GPL-v2.0",
@@ -15,8 +16,7 @@
     ],
     "autoload": {
         "psr-0": {
-            "XelaxPasswordGeneratorModule": "src"
-        },
-        "classmap" : ["Module.php"]
+            "XelaxPasswordGeneratorModule\\": "src/"
+        }
     }
 }

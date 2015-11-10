@@ -22,11 +22,13 @@ namespace XelaxPasswordGeneratorModule\Service;
 
 use Zend\Mvc\Service\AbstractPluginManagerFactory;
 
+use XelaxPasswordGeneratorModule\PluginManager\PluginManager;
+
 /**
  * Creates Password Generator PluginManager
  *
  * @author schurix
  */
 class PluginManagerFactory extends AbstractPluginManagerFactory{
-	const PLUGIN_MANAGER_CLASS = 'XelaxPasswordGeneratorModule\PluginManager\PluginManager';
+	const PLUGIN_MANAGER_CLASS = PluginManager::class;
 }
