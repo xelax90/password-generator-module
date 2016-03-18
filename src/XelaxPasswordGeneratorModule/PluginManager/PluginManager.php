@@ -34,10 +34,13 @@ class PluginManager extends AbstractPluginManager{
 	const GENERATOR_HUMAN    = HumanPasswordGenerator::class;
 	const GENERATOR_COMPUTER = ComputerPasswordGenerator::class;
 	const GENERATOR_HYBRID   = HybridPasswordGenerator::class;
-
-	public function __construct(\Zend\ServiceManager\ConfigInterface $configuration = null) {
-		parent::__construct($configuration);
-		
+	
+	public function __construct($configOrContainerInstance = null, array $v3config = array()) {
+		parent::__construct($configOrContainerInstance, $v3config);
+		$this->initServices();
+	}
+	
+	protected function initServices() {
 		$this->setInvokableClass(self::GENERATOR_HUMAN, self::GENERATOR_HUMAN);
 		$this->setInvokableClass(self::GENERATOR_HYBRID, self::GENERATOR_HYBRID);
 		$this->setInvokableClass(self::GENERATOR_COMPUTER , self::GENERATOR_COMPUTER);
